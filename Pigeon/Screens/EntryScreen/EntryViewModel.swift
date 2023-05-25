@@ -6,3 +6,9 @@
 //
 
 import Foundation
+
+protocol EntryViewOutput: AnyObject { }
+
+final class EntryViewModel { }
+
+extension EntryViewModel: EntryViewOutput { }
