@@ -7,23 +7,22 @@
 
 import UIKit
 
-class EntryViewController: UIViewController {
-
+final class EntryViewController: UIViewController {
+    
+    @IBOutlet private weak var loginButton: UIButton!
+    @IBOutlet private weak var registerButton: UIButton!
+    
     override func viewDidLoad() {
         super.viewDidLoad()
 
         // Do any additional setup after loading the view.
     }
     
-
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destination.
-        // Pass the selected object to the new view controller.
+    @IBAction private func loginButtonTapped(_ sender: UIButton) {
     }
-    */
+    
+    @IBAction private func registerButtonTapped(_ sender: UIButton) {
+    }
+    
 
 }
