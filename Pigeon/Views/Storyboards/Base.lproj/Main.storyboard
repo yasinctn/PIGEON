@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="21701" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="tKV-uW-AS0">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="21701" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="c0K-ze-mjS">
     <device id="retina6_12" orientation="portrait" appearance="light"/>
     <dependencies>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="21678"/>
@@ -225,7 +225,7 @@
                         <outlet property="emailTextField" destination="uT0-vx-KPg" id="J65-td-Kgw"/>
                         <outlet property="loginButton" destination="qHE-Yu-oUq" id="rGb-qt-yez"/>
                         <outlet property="passwordTextField" destination="UuX-id-HZl" id="KyJ-MZ-Doi"/>
-                        <segue destination="bLP-Gi-lhR" kind="show" identifier="loginToChat" id="zJq-e1-dsX"/>
+                        <segue destination="bLP-Gi-lhR" kind="show" identifier="loginToConversations" id="zJq-e1-dsX"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="tzQ-hx-ipq" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
@@ -380,11 +380,8 @@
                         <outlet property="emailTextField" destination="0Jr-xp-y1s" id="8sF-uF-oUC"/>
                         <outlet property="passwordTextField" destination="LBQ-ZJ-GgW" id="7Es-gX-QMf"/>
                         <outlet property="registerButton" destination="hFO-YH-2Xx" id="xor-By-8XC"/>
-                        <outlet property="registerMailTextField" destination="0Jr-xp-y1s" id="xFP-lK-LPt"/>
-                        <outlet property="registerPasswordTextField" destination="LBQ-ZJ-GgW" id="ZPr-QU-bIA"/>
-                        <outlet property="userNameTextField" destination="vIC-Ji-6Gh" id="f61-g1-eG4"/>
                         <outlet property="usernameTextField" destination="vIC-Ji-6Gh" id="8fz-eg-s32"/>
-                        <segue destination="bLP-Gi-lhR" kind="show" identifier="registerToChat" id="K1J-qR-CZO"/>
+                        <segue destination="bLP-Gi-lhR" kind="show" identifier="registerToConversations" id="K1J-qR-CZO"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="RIE-GS-emD" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>

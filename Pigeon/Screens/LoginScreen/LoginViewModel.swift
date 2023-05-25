@@ -15,9 +15,9 @@ final class LoginViewModel {
     private weak var view: LoginViewInput?
     private let authService: AuthServiceProtocol?
     
-    init(view: LoginViewInput) {
+    init(view: LoginViewInput, authService: AuthServiceProtocol = FirebaseAuthService()) {
         self.view = view
-        self.authService = FirebaseAuthService()
+        self.authService = authService
     }
     
 }
@@ -39,7 +39,7 @@ extension LoginViewModel: LoginViewOutput {
             if let error = authError {
                 self.view?.showAlert(error.localizedDescription)
             }else {
-                self.view?.showAlert(with: "loginToChat", title: "Login Success", actionTitle: "Go To Conversations")
+                self.view?.showAlert(with: "loginToConversations", title: "Login Success", actionTitle: "Go To Conversations")
                 
             }
         }
