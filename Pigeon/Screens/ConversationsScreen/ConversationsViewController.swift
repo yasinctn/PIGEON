@@ -8,7 +8,6 @@
 import UIKit
 
 protocol ConversationsViewInput: AnyObject {
-    func prepareTableView()
     func reloadData()
     func showAlert(_ message: String)
     func goToEntryScreen()
@@ -32,6 +31,7 @@ final class ConversationsViewController: UIViewController {
     }
     
     @IBAction private func newConversationButtonTapped(_ sender: UIBarButtonItem) {
+        performSegue(identifier: "goToSelectUser")
     }
 }
 
@@ -43,9 +43,9 @@ extension ConversationsViewController: UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: ConversationCell.identifier, for: indexPath) as! ConversationCell
+        let cell = tableView.dequeueReusableCell(withIdentifier: UserCell.identifier, for: indexPath) as! UserCell
         if let conversation = viewModel?.getConversation(indexPath.row) {
-            cell.configure(for: ConversationCellPresenter(conversationID: conversation.conversationID, username: conversation.chatTo))
+            cell.configure(for: UserCellPresenter(conversationID: conversation.conversationID, username: conversation.chatTo))
         }
         return cell
     }
@@ -57,11 +57,7 @@ extension ConversationsViewController: UITableViewDelegate { }
 
 // MARK: - ConversationViewInput
 
-extension ConversationsViewController: ConversationsViewInput, AlertPresentable {
-    func prepareTableView() {
-        conversationsTableView.dataSource = self
-        conversationsTableView.delegate = self
-    }
+extension ConversationsViewController: ConversationsViewInput, AlertPresentable, SeguePerformable {
     
     func reloadData() {
         conversationsTableView.reloadData()
@@ -74,6 +70,17 @@ extension ConversationsViewController: ConversationsViewInput, AlertPresentable 
     func goToEntryScreen() {
         popToRootViewControllerWithAlert(alertTitle: "Logout Success", actionTitle: "Close")
     }
+}
+
+// MARK: - Private Methods
+
+private extension ConversationsViewController {
+    
+    func prepareTableView() {
+        conversationsTableView.dataSource = self
+        conversationsTableView.delegate = self
+    }
+    
 }
 
 
