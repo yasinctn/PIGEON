@@ -6,7 +6,7 @@
 //
 
 import Foundation
-import Firebase
+import FirebaseAuth
 
 protocol AuthServiceProtocol {
     func login(email: String, password: String, completion: @escaping (Error?) -> Void)
