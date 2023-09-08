@@ -10,8 +10,8 @@ import UIKit
 final class UserCell: UITableViewCell {
 
     @IBOutlet private weak var usernameLabel: UILabel!
-    static let identifier = "userCell"
-    private var conversationId: String?
+    static let identifier = "UserCell"
+    private(set) var conversationId: String?
 
     
     override func awakeFromNib() {
@@ -28,5 +28,9 @@ final class UserCell: UITableViewCell {
     func configure(for presentedCell: UserCellPresenter) {
         conversationId = presentedCell.conversationID
         usernameLabel.text = presentedCell.username
+    }
+    
+    func getUsername() -> String? {
+        usernameLabel.text
     }
 }

@@ -11,7 +11,7 @@ struct UserCellPresenter {
     var conversationID: String
     var username: String
     
-    init(conversationID: String, username: String) {
+    init(conversationID: String = "" , username: String) {
         self.conversationID = conversationID
         self.username = username
     }
