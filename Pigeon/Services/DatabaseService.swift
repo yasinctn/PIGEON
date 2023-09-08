@@ -12,7 +12,9 @@ protocol DatabaseServiceProtocol {
     func writeUserData(username: String, email: String, password: String, completion: @escaping (Error?) -> Void)
     func readUsers(completion: @escaping ([String]?, Error?) -> Void)
     func readConversationsForUser(completion: @escaping ([Conversation]?, Error?) -> Void)
-    func createConversation(user: String, completion: @escaping (String?, Error?) -> Void)
+    func createConversation(selectedUser: String, completion: @escaping (Conversation, Error?) -> Void)
+    func writeMessageData(users: [String], conversation: Conversation, message: String, completion: @escaping (Error?) -> Void)
+    func readMessageData(conversationId: String, completion: @escaping([Message]?, Error?, String?) -> Void)
     
 }
 
@@ -61,13 +63,48 @@ final class DatabaseService: DatabaseServiceProtocol {
         }
     }
     
-    func createConversation(user: String, completion: @escaping (String?, Error?) -> Void) {
+    func createConversation(selectedUser: String, completion: @escaping (Conversation, Error?) -> Void) {
         
-        let conversation = Firestore.firestore().collection("conversations").document()
-        let conversationId = conversation.documentID
+        let docRef = Firestore.firestore().collection("conversations").document()
+        let conversationId = docRef.documentID
         guard let currentUser else { return }
-        writeConversationToUsers(conversation: conversation, conversationID: conversationId, users: [currentUser,user]) { error in
-            completion(conversationId,error)
+        let createdConversation = Conversation(conversationID: conversationId, users: [currentUser,selectedUser], receiver: selectedUser, sender: currentUser)
+
+        writeConversationToUsers(docRef: docRef, conversation: createdConversation) { error in
+            completion(createdConversation,error)
+        }
+    }
+    
+    // MARK: - Messages
+    
+    func writeMessageData(users: [String], conversation: Conversation, message: String, completion: @escaping (Error?) -> Void) {
+        
+        for user in users {
+            let userConversation = Firestore.firestore().collection("Users").document(user).collection("conversations").document(conversation.conversationID).collection("messages")
+            
+            userConversation.addDocument(data: ["sender": currentUser!,
+                                                "receiver": conversation.receiver,
+                                                "message": message,
+                                                "date": Date().formatted(),
+                                                "order": Date().timeIntervalSince1970] ) { error in
+                completion(error)
+            }
+        }
+    }
+    
+    func readMessageData(conversationId: String, completion: @escaping([Message]?, Error?, String?) -> Void) {
+        
+        guard let currentUser else { return }
+        
+        let userConversation = Firestore.firestore().collection("Users").document(currentUser).collection("conversations").document(conversationId).collection("messages")
+        let query = userConversation.order(by: "order")
+        
+        query.addSnapshotListener { [weak self] querySnapshot, error in
+            guard let self else { return }
+            
+            if let messages = self.getMessages(in: querySnapshot) {
+                completion(messages,error,currentUser)
+            }
         }
     }
 }
@@ -83,12 +120,13 @@ private extension DatabaseService {
         for doc in snapshotDocument {
             let conversation = doc.data()
             
+            // buraya bi bak yeeenim
             guard let conversationId = conversation["conversationId"] as? String,
                   let users = conversation["users"] as? [String] else { return [] }
             
             for user in users {
                 if user != currentUser {
-                    let newConversation = Conversation(conversationID: conversationId, user: user, chatTo: user)
+                    let newConversation = Conversation(conversationID: conversationId, users: users, receiver: user, sender: currentUser!)
                     conversations.append(newConversation)
                 }
             }
@@ -111,25 +149,53 @@ private extension DatabaseService {
         return users
     }
     
-    func writeConversationToUsers(conversation: DocumentReference, conversationID: String, users: [String], completion: @escaping (Error?) -> Void) {
+    func writeConversationToUsers(docRef: DocumentReference, conversation: Conversation, completion: @escaping (Error?) -> Void) {
         let conversationData: [String: Any] = [
-            "id": conversationID,
-            "users": users
+            "id": conversation.conversationID,
+            "users": conversation.users
         ]
-        conversation.setData(conversationData) { error in
+        docRef.setData(conversationData) { error in
             completion(error)
         }
         
-        for user in users {
+        for user in conversation.users {
             
             let userConversations = Firestore.firestore().collection("Users").document(user).collection("conversations")
-            let conversationData: [String: Any] = [ "conversationId": conversationID,
-                                                    "users": users]
-            userConversations.document(conversationID).setData(conversationData) { error in
+            let conversationData: [String: Any] = [ "conversationId": conversation.conversationID,
+                                                    "users": conversation.users,
+                                                    "sender": conversation.sender,
+                                                    "receiver": conversation.receiver]
+            userConversations.document(conversation.conversationID).setData(conversationData) { error in
                 completion(error)
             }
             
         }
+    }
+    
+    func getMessages(in querySnapshot: QuerySnapshot?) -> [Message]? {
+        
+        var messages: [Message]? = []
+        
+        if let snapshotDocument = querySnapshot?.documents {
+            for document in snapshotDocument {
+                let message = document.data()
+                
+                if let messageSender = message["sender"] as? String,
+                   let messageReceiver = message["receiver"] as? String,
+                   let messageBody = message["message"] as? String,
+                   let messageDate = message["date"] as? String {
+                    
+                    let newMessage = Message(body: messageBody,
+                                             sender: messageSender,
+                                             date: messageDate,
+                                             receiver: messageReceiver)
+                    
+                    messages?.append(newMessage)
+                }
+            }
+            return messages
+        }
+        return messages
     }
 }
 
