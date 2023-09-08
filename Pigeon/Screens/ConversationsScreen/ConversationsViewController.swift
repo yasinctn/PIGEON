@@ -45,7 +45,7 @@ extension ConversationsViewController: UITableViewDataSource {
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: UserCell.identifier, for: indexPath) as! UserCell
         if let conversation = viewModel?.getConversation(indexPath.row) {
-            cell.configure(for: UserCellPresenter(conversationID: conversation.conversationID, username: conversation.chatTo))
+            cell.configure(for: UserCellPresenter(conversationID: conversation.conversationID, username: conversation.receiver))
         }
         return cell
     }
@@ -53,7 +53,21 @@ extension ConversationsViewController: UITableViewDataSource {
 
 // MARK: - TableViewDelegate
 
-extension ConversationsViewController: UITableViewDelegate { }
+extension ConversationsViewController: UITableViewDelegate {
+    
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        viewModel?.setSelectedConversation(by: indexPath.row)
+        performSegue(identifier: "conversationsToChat")
+    }
+    
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if segue.identifier == "conversationsToChat" {
+            let destination = segue.destination as! ChatViewController
+            
+            destination.currentConversation = viewModel?.selectedConversation
+        }
+    }
+}
 
 // MARK: - ConversationViewInput
 

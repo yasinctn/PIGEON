@@ -9,8 +9,10 @@ import Foundation
 
 protocol ConversationsViewOutput {
     var conversationCount: Int { get }
+    var selectedConversation: Conversation? { get }
     func getConversations()
     func getConversation(_ index: Int) -> Conversation?
+    func setSelectedConversation(by index: Int)
     func logout()
 }
 
@@ -21,6 +23,7 @@ final class ConversationsViewModel {
     private var databaseService: DatabaseServiceProtocol?
     
     private(set) var conversations: [Conversation] = []
+    private(set) var selectedConversation: Conversation?
 
     init(view: ConversationsViewInput,
          authService: AuthServiceProtocol = FirebaseAuthService(),
@@ -30,9 +33,16 @@ final class ConversationsViewModel {
         self.authService = authService
         self.databaseService = databaseService
     }
+    
 }
 
 extension ConversationsViewModel: ConversationsViewOutput {
+    
+    func setSelectedConversation(by index: Int) {
+        selectedConversation = conversations[safe: index]
+        
+    }
+    
     var conversationCount: Int {
         conversations.count
     }
