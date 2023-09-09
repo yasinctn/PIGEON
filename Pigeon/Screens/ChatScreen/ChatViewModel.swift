@@ -64,20 +64,23 @@ extension ChatViewModel: ChatViewOutput {
     func sendMessages(message: String?, conversation: Conversation?) {
         
         let (isValid,warning) = checkValidation(message: message)
-        guard let conversation, let message, isValid else {
-            view?.showAlert(warning ?? "")
-            return
-        }
-        databaseService?.writeMessageData(users: conversation.users,
-                                          conversation: conversation,
-                                          message: message) { [weak self] error in
-            guard let self else { return }
-            if let error = error {
-                self.view?.showAlert(error.localizedDescription)
-            }else {
-                self.view?.clearMessageTextField()
+        
+        if isValid {
+            guard let conversation, let message else { return }
+            databaseService?.writeMessageData(users: conversation.users,
+                                              conversation: conversation,
+                                              message: message) { [weak self] error in
+                guard let self else { return }
+                if let error = error {
+                    self.view?.showAlert(error.localizedDescription)
+                }else {
+                    self.view?.clearMessageTextField()
+                }
             }
+        }else {
+            view?.showAlert(warning ?? "please try again")
         }
+        
     }
     
     
@@ -87,6 +90,9 @@ private extension ChatViewModel {
     
     func checkValidation(message: String?) -> (Bool, String?) {
         guard let message else {
+            return (false, "please type a message")
+        }
+        if message == "" {
             return (false, "please type a message")
         }
         return (true, nil)

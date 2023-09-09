@@ -23,6 +23,9 @@ final class ConversationsViewController: UIViewController {
         super.viewDidLoad()
         viewModel = ConversationsViewModel(view: self)
         prepareTableView()
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
         viewModel?.getConversations()
     }
     
