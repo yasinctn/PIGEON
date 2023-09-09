@@ -137,8 +137,8 @@
 				B03BF33D2A1F8BC40015BCB4 /* EntryScreen */,
 				B03BF33E2A1F8BE10015BCB4 /* LoginScreen */,
 				B03BF33F2A1F8BE90015BCB4 /* RegisterScreen */,
-				B03BF3412A1F8C140015BCB4 /* NewConversationScreen */,
 				B03BF3402A1F8BF50015BCB4 /* ConversationsScreen */,
+				B03BF3412A1F8C140015BCB4 /* NewConversationScreen */,
 				B03BF3422A1F8C270015BCB4 /* ChatScreen */,
 			);
 			path = Screens;

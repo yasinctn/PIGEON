@@ -287,7 +287,6 @@
                     <navigationItem key="navigationItem" id="BZa-Ef-rXQ"/>
                     <connections>
                         <outlet property="usersTableView" destination="DB7-gw-7SL" id="u4u-jN-TG9"/>
-                        <segue destination="irs-iX-nNj" kind="show" identifier="newConversationToChat" id="qSh-0P-1xD"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="0Hw-LK-u55" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
@@ -488,7 +487,6 @@
         </scene>
     </scenes>
     <inferredMetricsTieBreakers>
-        <segue reference="cxH-q7-0v4"/>
         <segue reference="zJq-e1-dsX"/>
     </inferredMetricsTieBreakers>
     <resources>
