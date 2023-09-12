@@ -8,13 +8,14 @@
 import Foundation
 
 struct Message {
-    let sender: String
+    let sender: User
+    let receiver: User
     let body: String
     let date: String
-    let receiver: String
     
     
-    init(body: String, sender: String, date: String, receiver: String) {
+    
+    init(body: String, sender: User, date: String, receiver: User) {
         self.sender = sender
         self.body = body
         self.date = date

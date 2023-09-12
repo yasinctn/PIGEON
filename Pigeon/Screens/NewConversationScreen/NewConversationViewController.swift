@@ -38,7 +38,7 @@ extension NewConversationViewController: UITableViewDataSource {
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: UserCell.identifier, for: indexPath) as! UserCell
         if let user = viewModel?.getUser(indexPath.row) {
-            cell.configure(for: UserCellPresenter(username: user))
+            cell.configure(for: UserCellPresenter(user: user))
         }
         return cell
     }

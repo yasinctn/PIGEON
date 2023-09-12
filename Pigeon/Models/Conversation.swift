@@ -9,12 +9,12 @@ import Foundation
 
 final class Conversation {
     let conversationID: String
-    let users: [String]
-    let receiver: String
-    let sender: String
+    let users: [User]
+    let receiver: User
+    let sender: User
     
     
-    init(conversationID: String, users: [String], receiver: String, sender: String) {
+    init(conversationID: String, users: [User], receiver: User, sender: User) {
         self.conversationID = conversationID
         self.users = users
         self.receiver = receiver

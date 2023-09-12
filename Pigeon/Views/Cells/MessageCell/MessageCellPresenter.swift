@@ -10,10 +10,10 @@ import Foundation
 struct MessageCellPresenter {
     var messageLabel: String
     var date: String
-    var receiver: String
-    var sender: String
+    var receiver: User
+    var sender: User
     
-    init(messageLabel: String, date: String, receiver: String, sender: String) {
+    init(messageLabel: String, date: String, receiver: User, sender: User) {
         self.messageLabel = messageLabel
         self.date = date
         self.receiver = receiver

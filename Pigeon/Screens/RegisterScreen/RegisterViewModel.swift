@@ -30,24 +30,22 @@ final class RegisterViewModel {
 
 extension RegisterViewModel: RegisterViewOutput {
     
-    func register(username: String?,
-                  email: String?,
-                  password: String?) {
+    func register(username: String?, email: String?, password: String?) {
         
         let (isValid, alertMessage) = checkValidation(username: username, email: email, password: password)
-        guard let email, let username, let password, isValid else {
-            view?.showAlert(alertMessage ?? "")
-            return
-        }
         
-        authService.register(email: email, password: password) { [weak self] authError in
-            guard let self else { return }
-            
-            if let error = authError {
-                self.view?.showAlert(error.localizedDescription)
-            } else {
-                self.writeUserData(username: username, email: email, password: password)
+        if let email, let username, let password, isValid {
+            authService.register(email: email, username: username, password: password) { [weak self] authError in
+                guard let self else { return }
+                
+                if let error = authError {
+                    self.view?.showAlert(error.localizedDescription)
+                } else {
+                    self.writeUserData(username: username, email: email, password: password)
+                }
             }
+        } else {
+            view?.showAlert(alertMessage ?? "")
         }
     }
 }
@@ -56,14 +54,12 @@ extension RegisterViewModel: RegisterViewOutput {
 
 private extension RegisterViewModel {
     
-    func writeUserData(username: String,
-                               email: String,
-                               password: String) {
+    func writeUserData(username: String, email: String, password: String) {
         
-        databaseService.writeUserData(username: username, email: email, password: password) { [weak self] error in
+        databaseService.writeUserData(username: username, email: email) { [weak self] error in
             guard let self else { return }
             
-            if let error {
+            if let error = error {
                 self.view?.showAlert(error.localizedDescription)
             } else {
                 self.view?.showAlert(with: "registerToConversations", title: "Register Successfull", actionTitle: "Go To Conversations")

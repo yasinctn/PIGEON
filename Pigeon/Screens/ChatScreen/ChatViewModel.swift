@@ -12,7 +12,7 @@ protocol ChatViewOutput {
     func getMessage(_ index: Int) -> Message?
     func sendMessages(message: String?, conversation: Conversation?)
     var messageCount: Int? { get }
-    var currentUser: String? { get }
+    var currentUser: User? { get }
 }
 
 final class ChatViewModel {
@@ -21,7 +21,7 @@ final class ChatViewModel {
     private var databaseService: DatabaseServiceProtocol?
     private(set) var messageCount: Int?
     private var messages : [Message] = []
-    private(set) var currentUser: String?
+    private(set) var currentUser: User?
     
     init(view: ChatViewInput,
          databaseService: DatabaseServiceProtocol = DatabaseService()) {

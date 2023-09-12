@@ -9,10 +9,10 @@ import Foundation
 
 struct UserCellPresenter {
     var conversationID: String
-    var username: String
+    var user: User
     
-    init(conversationID: String = "" , username: String) {
+    init(conversationID: String = "" , user: User) {
         self.conversationID = conversationID
-        self.username = username
+        self.user = user
     }
 }

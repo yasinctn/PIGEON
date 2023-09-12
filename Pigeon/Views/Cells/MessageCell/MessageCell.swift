@@ -29,13 +29,13 @@ class MessageCell: UITableViewCell {
         // Configure the view for the selected state
     }
     
-    func configure(for presentedCell: MessageCellPresenter, currentUser: String?) {
+    func configure(for presentedCell: MessageCellPresenter, currentUser: User?) {
         
         messageLabel.text = presentedCell.messageLabel
         messageView.layer.cornerRadius = 20
-        if currentUser == presentedCell.sender {
+        if currentUser?.email == presentedCell.sender.email {
             messageLabel.textAlignment = .right
-            rightTopLabel.text = presentedCell.sender
+            rightTopLabel.text = presentedCell.sender.username
             rightTopLabel.textAlignment = .right
             leftTopLabel.text = presentedCell.date
             rightImageView.isHidden = true
@@ -43,7 +43,7 @@ class MessageCell: UITableViewCell {
         }else {
             messageLabel.textAlignment = .left
             rightTopLabel.textAlignment = .right
-            leftTopLabel.text = presentedCell.sender
+            leftTopLabel.text = presentedCell.sender.username
             rightTopLabel.text = presentedCell.date
             leftImageView.isHidden = true
             messageView.backgroundColor = UIColor(named: "BrandLightPurple")

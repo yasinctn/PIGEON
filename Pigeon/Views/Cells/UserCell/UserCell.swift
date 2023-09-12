@@ -27,7 +27,7 @@ final class UserCell: UITableViewCell {
 
     func configure(for presentedCell: UserCellPresenter) {
         conversationId = presentedCell.conversationID
-        usernameLabel.text = presentedCell.username
+        usernameLabel.text = presentedCell.user.username
     }
     
     func getUsername() -> String? {

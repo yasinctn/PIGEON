@@ -44,6 +44,7 @@
 		B07DFD852A2221A800B2DADF /* UserCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B07DFD842A2221A800B2DADF /* UserCell.swift */; };
 		B09375A22A213A8300DCE725 /* Conversation.swift in Sources */ = {isa = PBXBuildFile; fileRef = B09375A12A213A8300DCE725 /* Conversation.swift */; };
 		B0A19C1E2A2802ED00608FED /* Message.swift in Sources */ = {isa = PBXBuildFile; fileRef = B0A19C1D2A2802ED00608FED /* Message.swift */; };
+		B0CEDFD92AAD0B7F009D1031 /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = B0CEDFD82AAD0B7F009D1031 /* User.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -80,6 +81,7 @@
 		B07DFD842A2221A800B2DADF /* UserCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserCell.swift; sourceTree = "<group>"; };
 		B09375A12A213A8300DCE725 /* Conversation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Conversation.swift; sourceTree = "<group>"; };
 		B0A19C1D2A2802ED00608FED /* Message.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Message.swift; sourceTree = "<group>"; };
+		B0CEDFD82AAD0B7F009D1031 /* User.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -302,6 +304,7 @@
 			children = (
 				B09375A12A213A8300DCE725 /* Conversation.swift */,
 				B0A19C1D2A2802ED00608FED /* Message.swift */,
+				B0CEDFD82AAD0B7F009D1031 /* User.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -395,6 +398,7 @@
 				B03BF34C2A1F939F0015BCB4 /* LoginViewController.swift in Sources */,
 				B03BF34E2A1F93B50015BCB4 /* EntryViewController.swift in Sources */,
 				B03BF3462A1F8C6B0015BCB4 /* NewConversationViewController.swift in Sources */,
+				B0CEDFD92AAD0B7F009D1031 /* User.swift in Sources */,
 				B03BF3482A1F938C0015BCB4 /* ConversationsViewController.swift in Sources */,
 				B03BF34A2A1F93960015BCB4 /* RegisterViewController.swift in Sources */,
 				B0A19C1E2A2802ED00608FED /* Message.swift in Sources */,

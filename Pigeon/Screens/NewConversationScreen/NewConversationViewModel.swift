@@ -9,19 +9,19 @@ import Foundation
 
 protocol NewConversationViewOutput {
     var usersCount: Int { get }
-    var selectedUser: String? { get }
+    var selectedUser: User? { get }
     func setSelectedUser(by index: Int)
     func getUsers()
-    func getUser(_ index: Int) -> String?
-    func createNewConversation(selectedUser: String?)
+    func getUser(_ index: Int) -> User?
+    func createNewConversation(selectedUser: User?)
 }
 
 final class NewConversationViewModel {
     
     weak var view: NewConversationViewInput?
     private var databaseService: DatabaseServiceProtocol?
-    private var users: [String] = []
-    private(set) var selectedUser: String?
+    private var users: [User] = []
+    private(set) var selectedUser: User?
     
     init(view: NewConversationViewInput,
          databaseService: DatabaseServiceProtocol? = DatabaseService()) {
@@ -36,7 +36,7 @@ final class NewConversationViewModel {
 extension NewConversationViewModel: NewConversationViewOutput {
 
     
-    func createNewConversation(selectedUser: String?) {
+    func createNewConversation(selectedUser: User?) {
         guard let selectedUser else { return }
         databaseService?.createConversation(selectedUser: selectedUser ) { [weak self] conversation, error in
             guard let self else { return }
@@ -74,7 +74,7 @@ extension NewConversationViewModel: NewConversationViewOutput {
      }
      
      
-    func getUser(_ index: Int) -> String? {
+    func getUser(_ index: Int) -> User? {
         self.users[safe: index]
     }
     
