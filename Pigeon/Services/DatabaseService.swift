@@ -168,7 +168,7 @@ private extension DatabaseService {
             
             guard let fetchedConversationId = conversationData["conversationId"] as? String,
                   let fetchedUsers = conversationData["users"] as? [[String: Any]] else { continue }
-            
+            userArray = []
             for user in fetchedUsers {
                 if let email = user["email"] as? String,
                    let username = user["username"] as? String {
